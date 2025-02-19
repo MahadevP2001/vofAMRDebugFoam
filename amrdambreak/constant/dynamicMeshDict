@@ -1,0 +1,95 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      dynamicMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+//dynamicFvMesh   dynamicRefineFvMesh;
+dynamicFvMesh   dynamicRefine2DFvMesh;
+
+
+dynamicRefine2DFvMeshCoeffs{
+
+nBufferLayersR 2;
+
+// How often to refine
+refineInterval  1;
+
+// Field to be refinement on
+field           volumeFraction1;
+
+// Refine field inbetween lower..upper
+lowerRefineLevel 0.001;
+upperRefineLevel 0.999;
+
+// If value < unrefineLevel unrefine
+unrefineLevel   10;
+
+// Have slower than 2:1 refinement
+nBufferLayers   1;
+
+// Refine cells only up to maxRefinement levels
+maxRefinement   2;
+
+// Stop refinement if maxCells reached
+maxCells        2000000;
+
+// Flux field and corresponding velocity field. Fluxes on changed
+// faces get recalculated by interpolating the velocity. Use 'none'
+// on surfaceScalarFields that do not need to be reinterpolated.
+correctFluxes
+(
+    (phi none)
+    (rho2_own none)
+    (rho2_nei none)
+    (rho1_own none)
+    (rho1_nei none)
+    (rAUf_own none)
+    (rAUf_nei none)
+    (phiv_own none)
+    (phiv_nei none)
+    (phib none)
+    (phi_0 none)
+    (phiVF2 none)
+    (phiVF1 none)
+    (phiHbyA_own none)
+    (phiHbyA_nei none)
+    (phiHbyA none)
+    (phi2_own none)
+    (phi2_nei none)
+    (phi1_own none)
+    (phi1_nei none)
+    (own none)
+    (nei none)
+    (nHatf none)
+    (kappa none)
+    (interpolate(volumeFraction1) none)
+    (ghf none)
+    (aphiv_own none)
+    (aphiv_nei none)
+    (amaxSf none)
+    (alpha_own none)
+    (alpha_nei none)
+    (aSf none)
+    (Cf_own none)
+    (Cf_nei none)
+    (CfSf_own none)
+    (CfSf_nei none)
+);
+
+// Write the refinement level as a volScalarField
+dumpLevel       true;
+};
+
+// ************************************************************************* //
